@@ -1,0 +1,15 @@
+/* app/not-found.module.css */
+.wrapper {
+  text-align: center;
+  padding: 64px 0;
+}
+
+.title {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.description {
+  font-size: 18px;
+  opacity: 0.75;
+}
