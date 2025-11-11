@@ -1,8 +1,14 @@
 //app/notes/filter/layout.tsx
 import SidebarNotes from '../../../components/SidebarNotes/SidebarNotes';
+import { ReactNode } from 'react';
 import css from './layout.module.css';
 
-export default function LayoutNotesFilter({ children }: { children: React.ReactNode }) {
+interface NotesFilterProps {
+  readonly children: ReactNode;
+}
+
+export default function LayoutNotesFilter({ children }: NotesFilterProps) {
+
   return (
     <div className={css.layout}>
       <SidebarNotes />
@@ -10,3 +16,4 @@ export default function LayoutNotesFilter({ children }: { children: React.ReactN
     </div>
   );
 }
+

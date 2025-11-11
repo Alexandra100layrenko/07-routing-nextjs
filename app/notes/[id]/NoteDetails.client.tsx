@@ -3,20 +3,18 @@
 import { getNoteById } from '@/lib/api';
 import { Note } from '@/types/note';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
 import css from './NoteDetails.client.module.css';
 
 type Props = { readonly initialNote: Note };
 
 export default function NoteDetails({ initialNote }: Props) {
-  const params = useParams();
-  const id = Array.isArray(params?.id) ? params.id[0] : params?.id ?? initialNote.id;
+  const id = initialNote.id;
 
   const { data: note, isLoading, isError, error } = useQuery<Note, Error>({
     queryKey: ['note', id],
     queryFn: async () => {
       const n = await getNoteById(id);
-      if (!n) throw new Error('Note not found'); // 🔹 гарантируем, что возвращается Note
+      if (!n) throw new Error('Note not found');
       return n;
     },
     initialData: initialNote,

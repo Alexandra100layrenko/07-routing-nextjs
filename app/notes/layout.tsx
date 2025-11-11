@@ -2,6 +2,10 @@
 import { ReactNode } from 'react';
 import LayoutNotes from '@/components/LayoutNotes/LayoutNotes';
 
-export default function NotesLayout({ children }: { children: ReactNode }) {
+interface NotesLayoutProps {
+  readonly children: ReactNode;
+}
+
+export default function NotesLayout({ children }: NotesLayoutProps) {
   return <LayoutNotes>{children}</LayoutNotes>;
 }

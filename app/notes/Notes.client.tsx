@@ -1,26 +1,22 @@
 // app/notes/Notes.client.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
-import { getNotes } from '@/lib/api';
+import { useMemo } from 'react';
 import { Note } from '@/types/note';
 import NoteList from '@/components/NoteList/NoteList';
 
 interface NotesClientProps {
+  readonly initialNotes: Note[];
   readonly initialTag?: string | null;
 }
 
-export default function NotesClient({ initialTag }: NotesClientProps) {
-  const [notes, setNotes] = useState<Note[]>([]);
-  const tag = initialTag ?? null; // 🔹 setTag не нужен, потому что ты не меняешь тег здесь
+export default function NotesClient({ initialNotes, initialTag }: NotesClientProps) {
+  const tag = initialTag ?? null;
 
-  useEffect(() => {
-    async function fetchNotes() {
-      const allNotes = await getNotes();
-      setNotes(tag ? allNotes.filter((n) => n.tag === tag) : allNotes);
-    }
-    fetchNotes();
-  }, [tag]); // 🔹 зависимости useEffect обновлены корректно
+  const notes = useMemo(
+    () => (tag ? initialNotes.filter((n) => n.tag === tag) : initialNotes),
+    [initialNotes, tag]
+  );
 
   return <NoteList notes={notes} />;
 }

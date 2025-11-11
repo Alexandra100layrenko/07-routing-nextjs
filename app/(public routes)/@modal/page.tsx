@@ -6,16 +6,18 @@ import css from '@/components/Home/Home.module.css';
 import Link from 'next/link';
 
 export default async function PublicHome() {
-  const response = await getNotes();
+  const notes = await getNotes();
 
   return (
     <section className={css.homeSection}>
       <Home />
-      {response?.notes?.length ? (
-        <NoteList notes={response.notes} />
+
+      {notes.length > 0 ? (
+        <NoteList notes={notes} />
       ) : (
         <p className={css.empty}>No notes yet. Create your first note!</p>
       )}
+
       <Link href="/notes/form" className={css.createBtn}>
         Create Note
       </Link>

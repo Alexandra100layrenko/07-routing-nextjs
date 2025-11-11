@@ -1,22 +1,17 @@
 //components/NotePreview/NotePreview.tsx
-'use client';
-
 import { Note } from '@/types/note';
-import css from './NotePreviev.module.css';
 
 interface NotePreviewProps {
   note: Note;
+  isModal?: boolean;
 }
 
-export default function NotePreview({ note }: NotePreviewProps) {
+export default function NotePreview({ note, isModal }: NotePreviewProps) {
   return (
-    <div className={css.container}>
-      <div className={css.header}>
-        <h2>{note.title}</h2>
-        <span className={css.date}>{note.createdAt}</span>
-      </div>
-      <p className={css.content}>{note.content}</p>
-      <span className={css.tag}>{note.tag}</span>
+    <div style={{ border: isModal ? '2px solid blue' : '1px solid gray', padding: '12px' }}>
+      <h3>{note.title}</h3>
+      <p>{note.content}</p>
+      <span>{note.tag}</span>
     </div>
   );
 }
