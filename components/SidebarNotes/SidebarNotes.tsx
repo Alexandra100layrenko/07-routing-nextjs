@@ -1,32 +1,38 @@
 //components/SidebarNotes/SidebarNotes.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { getNotes } from '@/lib/api';
-import { Note } from '@/types/note';
 import css from './SidebarNotes.module.css';
 
-export default function SidebarNotes() {
-  const [notes, setNotes] = useState<Note[]>([]);
+interface SidebarNotesProps {
+  readonly activeTag?: string | null;
+  readonly onTagClick?: (tag: string | null) => void;
+}
 
-  useEffect(() => {
-    async function fetchNotes() {
-      setNotes(await getNotes());
-    }
-    fetchNotes();
-  }, []);
+const tags = ['All', 'Todo', 'Work', 'Personal', 'Meeting', 'Shopping'];
 
+export default function SidebarNotes({ activeTag, onTagClick }: SidebarNotesProps) {
   return (
-    <aside className={css.sidebar}>
-      <h3 className={css.title}>All Notes</h3>
-      <ul className={css.list}>
-        {notes.map((note) => (
-          <li key={note.id} className={css.item}>
-            <Link href={`/notes/${note.id}`}>{note.title}</Link>
-          </li>
-        ))}
+    <div className={css.sidebarContent}>
+      <h3>Tags</h3>
+      <ul className={css.tagList}>
+        {tags.map(tag => {
+          const value = tag.toLowerCase();
+          const isActive =
+            (activeTag === null && value === 'all') ||
+            activeTag?.toLowerCase() === value;
+
+          return (
+            <li key={tag}>
+              <button
+                className={isActive ? css.active : ''}
+                onClick={() => onTagClick?.(value === 'all' ? null : value)}
+              >
+                {tag}
+              </button>
+            </li>
+          );
+        })}
       </ul>
-    </aside>
+    </div>
   );
 }

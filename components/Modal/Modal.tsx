@@ -1,34 +1,22 @@
 // components/Modal/Modal.tsx
 'use client';
-
-import { useEffect, useState } from 'react';
-import { getNoteById } from '@/lib/api';
-import { Note } from '@/types/note';
-import NotePreview from '@/components/NotePreview/NotePreview';
+import { useRouter } from 'next/navigation';
 import css from './Modal.module.css';
 
-interface ModalProps {
-  noteId: string;
-}
+type Props = { children: React.ReactNode; };
 
-export default function Modal({ noteId }: ModalProps) {
-  const [note, setNote] = useState<Note | null>(null);
-
-  useEffect(() => {
-    async function fetchNote() {
-      const n = await getNoteById(noteId);
-      setNote(n ?? null);
-    }
-    fetchNote();
-  }, [noteId]);
-
-  if (!note) return null;
+const Modal = ({ children }: Props) => {
+  const router = useRouter();
+  const close = () => router.back();
 
   return (
-    <div className={css.overlay}>
+    <div className={css.backdrop}>
       <div className={css.modal}>
-        <NotePreview note={note} />
+        {children}
+        <button onClick={close} className={css.closeBtn}>Close</button>
       </div>
     </div>
   );
-}
+};
+
+export default Modal;

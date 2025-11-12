@@ -5,6 +5,6 @@ interface LayoutProps {
   readonly children: ReactNode;
 }
 
-export default function PublicLayout({ children }: LayoutProps) {
+export default function PrivateLayout({ children }: LayoutProps) {
   return <div>{children}</div>;
 }

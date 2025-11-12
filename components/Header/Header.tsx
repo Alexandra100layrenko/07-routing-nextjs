@@ -1,29 +1,26 @@
 // components/Header/Header.tsx
 import Link from 'next/link';
-import css from './Header.module.css'
+import css from './Header.module.css';
 
-const Header = () =>{
-  return <header className={css.header}>
-    <Link href="/" aria-label="Home">
-      NoteHub
-    </Link>
-    <nav aria-label="Main Navigation">
+const Header = () => {
+  return (
+    <header className={css.header}>
+      <Link href="/" className={css.headerLink}>
+        NoteHub
+      </Link>
       <ul className={css.navigation}>
-        <li>
-          <Link href="/">Home</Link>
+        <li className={css.navigationItem}>
+          <Link href="/notes" className={css.navigationLink}>Notes</Link>
         </li>
-        <li>
-          <Link href="/notes">Notes</Link>
+        <li className={css.navigationItem}>
+          <Link href="/about" className={css.navigationLink}>About</Link>
         </li>
-        <li>
-          <Link href="/about">About</Link>
-        </li>
-        <li>
-          <Link href="/profile">Profile</Link>
+        <li className={css.navigationItem}>
+          <Link href="/profile" className={css.navigationLink}>Profile</Link>
         </li>
       </ul>
-    </nav>
-  </header>
-}
+    </header>
+  );
+};
 
 export default Header;

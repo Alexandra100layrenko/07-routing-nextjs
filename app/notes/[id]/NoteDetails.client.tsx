@@ -25,14 +25,19 @@ export default function NoteDetails({ initialNote }: Props) {
   if (isLoading) return <p>Loading...</p>;
   if (isError || !note) return <p>{error?.message || 'Something went wrong'}</p>;
 
+  const formattedDate = note.updatedAt
+  ? `Updated at: ${note.updatedAt}`
+  : `Created at: ${note.createdAt}`;
+
   return (
     <div className={css.container}>
-      <div className={css.header}>
-        <h2>{note.title}</h2>
-        <span className={css.date}>{note.createdAt}</span>
+      <div className={css.item}>
+        <div className={css.header}>
+          <h2>{note.title}</h2>
+        </div>
+        <p className={css.content}>{note.content}</p>
+        <p className={css.date}>{formattedDate}</p>
       </div>
-      <p className={css.content}>{note.content}</p>
-      <span className={css.tag}>{note.tag}</span>
     </div>
   );
 }

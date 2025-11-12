@@ -1,17 +1,20 @@
 //components/NotePreview/NotePreview.tsx
 import { Note } from '@/types/note';
+import css from './NotePreview.module.css';
 
-interface NotePreviewProps {
-  note: Note;
-  isModal?: boolean;
+interface Props {
+  readonly note: Note;
 }
 
-export default function NotePreview({ note, isModal }: NotePreviewProps) {
+export default function NotePreview({ note }: Props) {
   return (
-    <div style={{ border: isModal ? '2px solid blue' : '1px solid gray', padding: '12px' }}>
-      <h3>{note.title}</h3>
-      <p>{note.content}</p>
-      <span>{note.tag}</span>
+    <div className={css.container}>
+      <div className={css.header}>
+        <h2>{note.title}</h2>
+        <span className={css.date}>{new Date(note.createdAt).toLocaleDateString()}</span>
+      </div>
+      <p className={css.content}>{note.content}</p>
+      {note.tag && <span className={css.tag}>{note.tag}</span>}
     </div>
   );
 }

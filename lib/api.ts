@@ -33,3 +33,7 @@ export async function createNote(note: Note): Promise<void> {
     }, 300)
   );
 }
+
+export async function getSingleNote(id: string) {
+  return getNoteById(id);
+}

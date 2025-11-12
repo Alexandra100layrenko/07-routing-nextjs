@@ -1,19 +1,26 @@
 // components/LayoutNotes/LayoutNotes.tsx
-import { ReactNode } from 'react';
+'use client';
+
+import React from 'react';
+import SidebarNotes from '@/components/SidebarNotes/SidebarNotes';
 import css from './LayoutNotes.module.css';
-import SidebarNotes from '../SidebarNotes/SidebarNotes';
 
-interface LayoutNotesProps {
-  readonly children: ReactNode;
-}
+type Props = {
+  readonly children: React.ReactNode;
+  readonly sidebar?: React.ReactNode;
+};
 
-export default function LayoutNotes({ children }: LayoutNotesProps) {
+const LayoutNotes = ({ children, sidebar }: Props) => {
   return (
     <div className={css.container}>
-      <aside className={css.sidebar}>
-        <SidebarNotes />
-      </aside>
-      <main className={css.notesWrapper}>{children}</main>
+      <div className={css.sidebar}>
+        {sidebar || <SidebarNotes />}
+      </div>
+      <div className={css.notesWrapper}>
+        {children}
+      </div>
     </div>
   );
-}
+};
+
+export default LayoutNotes;

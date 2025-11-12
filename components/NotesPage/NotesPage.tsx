@@ -1,20 +1,35 @@
 //components/NotesPage/NotesPage.tsx
+import NoteList from '../NoteList/NoteList';
+import SidebarNotes from '../SidebarNotes/SidebarNotes';
 import css from './NotesPage.module.css';
-import NotesClient from '../../app/notes/Notes.client';
-import { getNotes } from '@/lib/api';
 
-export default async function NotesPage({ searchParams }: { searchParams?: { tag?: string } }) {
-  const notes = await getNotes(); 
-  const tag = searchParams?.tag ?? null;
+type Note = {
+  id: string;
+  title: string;
+  content: string;
+  tag?: string;
+  createdAt: string;
+};
 
+type Props = {
+  notes: Note[];
+};
+
+const NotesPage = ({ notes }: Props) => {
   return (
-    <div className={css.app}>
-      <div className={css.toolbar}>
-        <h1>Notes</h1>
-        <button className={css.button}>New Note</button>
-      </div>
-
-      <NotesClient initialNotes={notes} initialTag={tag} />
+    <div className={css.container}>
+      <aside className={css.sidebar}>
+        <SidebarNotes />
+      </aside>
+      <main className={css.main}>
+        {notes.length > 0 ? (
+          <NoteList notes={notes} />
+        ) : (
+          <p className={css.empty}>No notes found</p>
+        )}
+      </main>
     </div>
   );
-}
+};
+
+export default NotesPage;
